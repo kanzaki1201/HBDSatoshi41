@@ -33,15 +33,7 @@ html, body {
     left: 0;
 }
 
-.score {
-    color: white;
-    margin-top: 3%;
-    /* text-shadow: 1px 1px 2px black; */
-    font-size: 48px;
-    position: absolute;
-    right: 0%;
-    margin-right: 3%;
-}
+
 
 #ship {
     transform-origin: left;
@@ -53,7 +45,6 @@ html, body {
     top: 30vh;
 }
 
-
 #ship-img {
     transform-origin: left;
     width: 100%;
@@ -61,10 +52,27 @@ html, body {
     object-fit: contain;
 }
 
+.rightUi {
+    position: absolute;
+    right: 0%;
+    height: 100%;
+    margin-right: 3%;
+}
+
+.score {
+    color: white;
+    margin-top: 3%;
+    /* text-shadow: 1px 1px 2px black; */
+    font-size: 48px;
+    position: absolute;
+    right: 0%;
+    margin-right: 3%;
+}
+
 .icon-container {
     position: absolute;
-    display: flex;
-    width: 25vw;
+    /* display: flex; */
+    width: auto;
     max-width: 200px;
     height: 50%;
     flex-direction: column;
@@ -75,7 +83,8 @@ html, body {
 }
 
 .icon {
-    flex: 0 1 25%;
+    /* flex: 0 1 25%; */
+    height: 25%;
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
