@@ -1,109 +1,60 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+html, body {
+    /* Disable scrolling*/
+    height: 100%;
+    overflow: hidden; 
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    font-family: Helvetica, sans-serif;
+#background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Always stays at bottom*/
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('assets/background1024.png');
 }
 
 .wrapper {
-    border: 3px solid #010124;
-    width: 800px;
-    height: 600px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: url('assets/background.png');
+    width: 100vw;
+    height: 100%;
     overflow: hidden;
+    position: fixed;
+}
+
+#game {
+    width: 100%;
+    height: 100%;
 }
 
 
 .score {
-    font-size: 150px;
-    color: #010124;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 100px;
-    text-align: center;
-}
-
-
-.countdown {
-    position: absolute;
-    top: 490px;
-    width: 100%;
-    font-size: 20px;
-    text-align: center;
-    color: #010124;
-}
-
-button {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    background: #010124;
+    font-size: 24px;
     color: white;
-    padding: 20px 50px;
-    border-radius: 5px;
-    z-index: 200;
-    cursor: pointer;
-    border: none;
-    outline: none;
+    margin-top: 3%;
+    text-shadow: 1px 1px 2px black;
 }
 
-.game {
-    width: 600px;
-    height: 400px;
-    margin: 70px auto;
-    z-index: 200;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.hole {
-    flex: 1 0 33.33%;
-    position: relative;
-    overflow: hidden;
-}
-
-.hole:after {
-    content: '';
-    display: block;
-    background-image: url('assets/sand1.png');
-    position: absolute;
-    width: 100%;
-    height: 70px;
-    z-index: 2;
-    bottom: -30px;
-    background-size: contain;
-}
-
-.mole {
-    background-image: url('assets/yoda1.png');
-    position: absolute;
-    top: 100%;
+#ship-img {
+    transform-origin: left;
     width: 100%;
     height: 100%;
-    transition: 0.4s;
-    background-repeat: no-repeat;
-    background-position: bottom;
+    object-fit: contain;
 }
 
-.mole.small {
-    background-size: 60%;
+#ship {
+    transform-origin: left;
+    /* background-color: magenta; */
+    width: 50%;
+    height: 35%;
+    position: absolute;
+    left: 0%;
+    top: 30vh;
 }
 
-.mole.large {
-    background-size: 80%;
-}
 
-.hole.up .mole{
-    top: 0;
-}
+
+
