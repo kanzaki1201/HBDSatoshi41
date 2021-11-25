@@ -25,22 +25,6 @@ class Satoshi {
         this.idle_sprite = new Sprite(document.querySelector('#satoshi-idle'));
         this.up_sprite = new Sprite(document.querySelector('#satoshi-up'));
         this.exclamation = new Sprite(document.querySelector('#exclamation'));
-        this.status = 0;
-    }
-
-    setSpriteStatus(value){
-        value %= 3;
-        switch(value){
-            case 0:
-                this.setSprite(true, false, false);
-                break;
-            case 1: 
-                this.setSprite(true, false, true);
-                break;
-            case 2:
-                this.setSprite(false, true, false);
-                break;
-        }
     }
 
     setSprite(idle, up, exclamation){
@@ -49,15 +33,20 @@ class Satoshi {
         this.exclamation.setEnable(exclamation);
     }
 
-    getCurrentSprite(){
-        switch(value){
-            case 0:
-                return this.idle_sprite;
-            case 1:
-                return this.idle_sprite;
-            case 2:
-                return this.up_sprite;
-        }
+    idle(){
+        this.setSprite(true, false, false);
+    }
+
+    battle(){
+        this.setSprite(true, false, true);
+    }
+
+    upFail(){
+        this.setSprite(false, true, false);
+    }
+
+    upSucess(){
+        this.setSprite(false, true, false);
     }
 
 }
@@ -97,10 +86,10 @@ class Ripple extends Sprite {
         super(sprite);
         this.speed = speed;
         this.setEnable(false);
-        this.initX();
+        this.resetX();
     }
 
-    initX(){
+    resetX(){
         let rect = this.getRect();
         this.sprite.style.left = -1 * rect.width + 'px';
     }
@@ -108,11 +97,36 @@ class Ripple extends Sprite {
     moveX(){
         let rect = this.getRect();
         let gameRect = gameArea.getBoundingClientRect();
-        let newLeft = (rect.left + this.speed * (1000/60));
-        if(newLeft > gameRect.right) newLeft = -1 * rect.width;
+        let newLeft = (rect.left + this.speed * (1000/60.0));
+        if(newLeft > gameRect.right) {
+            newLeft = -1 * rect.width;
+        }
         
         this.sprite.style.left = newLeft + 'px';
         return;
+    }
+}
+
+class LifeCounter {
+    constructor(){
+        this.lifeCount = 3;
+        this.lifeSprites = [
+            new Sprite(document.querySelector('#life0')),
+            new Sprite(document.querySelector('#life1')),
+            new Sprite(document.querySelector('#life2')),
+        ];
+    }
+
+    setLife(val){
+        val %= 3;
+        for (let index = 0; index < this.lifeSprites.length; index++) {
+            this.lifeSprites[index].setEnable(index + 1 <= val);
+        }
+    }
+
+    decrementLife(){
+        this.lifeCount = Math.max(this.lifeCount-1, 0);
+        this.setLife(this.lifeCount);
     }
 }
 
@@ -121,10 +135,11 @@ const sho = new Member('sho');
 const aiba = new Member('aiba');
 const nino = new Member('nino');
 const jun = new Member('jun');
+const members = [sho, aiba, nino, jun];
 
-const lives = document.querySelectorAll(".life");
 const fish = new Fish();
 const ripple = new Ripple(.1);
+const lifeCounter = new LifeCounter();
 const scoreText = document.querySelector('.score');
 const gameArea = document.querySelector('#game');
 
@@ -132,45 +147,22 @@ const title = document.querySelector('.title');
 const title_start = document.querySelector(".start");
 const title_gameover = document.querySelector(".gameover");
 
-let isIdle = true;
-let lifeCount = 3;
 let fishCount = 0;
-let members = [sho, aiba, nino, jun];
 
-function setLife(value){
-    for (let i = 0; i < lives.length; i++) {
-       if(i+1 <= value){
-           lives[i].style.display = 'block';
-       } 
-       else{
-           lives[i].style.display = 'none';
-       }
-    }
-}
-
-function setIdle(value) {
-    isIdle = value;
-    if(isIdle){
-        satoshi_idle.style.display = 'block';
-        satoshi_up.style.display = 'none';
-    }
-    else{
-        satoshi_up.style.display = 'block';
-        satoshi_idle.style.display = 'none';
-    }
-}
+const upFailTime = 3000; //ms
 
 function resetGameValues(){
-    lifeCount = 3;
-    fishCount = 0;
     scoreText.innerHTML = "0";
-    satoshi.setSpriteStatus(0);
+    satoshi.idle();
+    ripple.resetX();
+    lifeCounter.setLife(3);
 }
 
 function startGame(){
     if (gameStatus != GameStatus.startTitle) return;
     setTitle(false, false, false);
     gameStatus = GameStatus.idle;
+    ripple.setEnable(true);
 }
 
 function restartGame(){
@@ -187,15 +179,31 @@ function setTitle(enabled, isStart, isGameover){
 
 
 function onHitboxClick(){
+    console.log('cilck');
     switch(gameStatus){
         case GameStatus.idle:
-            console.log('idle click')
             let rippleRect = ripple.getRect();
             let satoshiRect = satoshi.idle_sprite.getRect();
-            let rippleCenter = (rippleRect.left + ripple.right) * 0.5;
-            if(rippleRect.left > satoshiRect.right || rippleRect.right < satoshiRect.left) return;
+            let rippleCenter = (rippleRect.left + rippleRect.right) * 0.5;
+            let satoshiCenter = (satoshiRect.left + satoshiRect.right) * 0.5;
+            if(rippleRect.left > satoshiRect.right 
+                || rippleCenter < satoshiCenter){
+                satoshi.upFail();
+                lifeCounter.decrementLife();
+                if(lifeCounter.lifeCount > 0){
+                    gameStatus = GameStatus.upFail;
+                    setTimeout( () => {
+                        gameStatus = GameStatus.idle;
+                        ripple.resetX();
+                    }, 3000);
+                    return;
+                }
+                gameStatus = GameStatus.gameover;
+                return;
+            }
+            console.log('to battle');
             gameStatus = GameStatus.battle;
-            satoshi.setSpriteStatus(1);
+            satoshi.battle();
             break;
         case GameStatus.battle:
             break;
@@ -203,8 +211,8 @@ function onHitboxClick(){
 }
 
 function doIdle(){
-    ripple.setEnable(true);
     ripple.moveX();
+    satoshi.idle();
 }
 
 function mainLoop(){
@@ -236,8 +244,5 @@ function mainLoop(){
 }
 
 let gameStatus = GameStatus.justLoaded;
-document.addEventListener('DOMContentLoaded', () => {
-    gameStatus = GameStatus.justLoaded;
-    setInterval(mainLoop, 1000/60);
-});
+setInterval(mainLoop, 1000/60.0); //1000ms/60 = 60fps
 

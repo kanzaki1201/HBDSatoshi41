@@ -295,6 +295,7 @@ button {
     height: 100vh;
     position: absolute;
     bottom: 0;
+    z-index: 98;
 }
 
 #left-hitbox {
