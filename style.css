@@ -54,7 +54,7 @@ html, body {
     object-fit: contain;
 }
 
-#satoshi {
+.satoshi {
     position: absolute;
     height: 75%;
     width: auto;
@@ -62,7 +62,7 @@ html, body {
     transform: translate(50%, -140%);
 }
 
-#satoshi-img {
+#satoshi-up-img {
     height: 100%;
     object-fit: contain;
 }
@@ -74,12 +74,16 @@ html, body {
     left: 50%;
     height: auto;
     width: auto;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
 }
 
-.member-img {
-    object-fit: contain;
-    height: 200%;
-    width: 200%;
+#temp-member {
+    background-image: url("assets/temp_member.png");
 }
 
 .life-container {
