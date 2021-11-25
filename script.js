@@ -1,5 +1,40 @@
-const satoshi_idle = document.querySelector('#satoshi-idle')
-const satoshi_up = document.querySelector('#satoshi-up')
+class Satoshi {
+    constructor(){
+        this.idle_sprite = document.querySelector('#satoshi-idle');
+        this.up_sprite = document.querySelector('#satoshi-up');
+        this.exclamation = document.querySelector('#exclamation');
+        this.status = 0;
+    }
+
+    nextStatus(){
+        this.status++;
+        this.status %= 3;
+        this.setStatus(this.status);
+    }
+
+    setStatus(value){
+        switch(value){
+            case 0:
+                this.setSprite(true, false, false);
+                break;
+            case 1: 
+                this.setSprite(true, false, true);
+                break;
+            case 2:
+                this.setSprite(false, true, false);
+                break;
+        }
+    }
+
+    setSprite(idle, up, exclamation){
+        this.idle_sprite.style.display = idle ? 'block' : 'none';
+        this.up_sprite.style.display = up ? 'block' : 'none';
+        this.exclamation.style.display = exclamation ? 'block' : 'none';
+    }
+
+}
+
+const satoshi = new Satoshi();
 
 class Fishable {
     constructor(name, sprite){
@@ -75,7 +110,7 @@ function initGame(){
     lifeCount = 3;
     fishCount = 0;
     scoreText.innerHTML = "0";
-    setIdle(true);
+    satoshi.setStatus(0);
 }
 
 function startGame(){
@@ -94,7 +129,7 @@ function setTitle(enabled, isStart, isGameover){
 }
 
 function onHitboxClick(){
-    console.log("on hitbox click");
+    satoshi.nextStatus();
 }
 
 function onPageLoaded(){
