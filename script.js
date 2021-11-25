@@ -1,17 +1,30 @@
 const satoshi_idle = document.querySelector('#satoshi-idle')
 const satoshi_up = document.querySelector('#satoshi-up')
-const lives = document.querySelectorAll(".life");
 
-class Member {
-    constructor(name) {
+class Fishable {
+    constructor(name, sprite){
         this.name = name;
         this.count = 0;
-        this.sprite = document.querySelector('#'+name);
-        this.countText = document.querySelectorAll('#'+name+'-count');
+        this.sprite = sprite;
+        this.setEnable(false);
     }
 
     setEnable(value) {
         this.sprite.style.display = value ? 'block' : 'none';
+    }
+}
+class Member extends Fishable {
+    constructor(name) {
+        let sprite = document.querySelector('#'+name);
+        super(name, sprite);
+        this.countText = document.querySelectorAll('#'+name+'-count');
+    }
+}
+
+class Fish extends Fishable {
+    constructor(){
+        let sprite = document.querySelector('.fish');
+        super('fish', sprite);
     }
 }
 
@@ -19,6 +32,9 @@ const sho = new Member('sho');
 const aiba = new Member('aiba');
 const nino = new Member('nino');
 const jun = new Member('jun');
+
+const lives = document.querySelectorAll(".life");
+const fish = new Fish();
 
 let isIdle = true;
 let lifeCount = 3;
@@ -53,6 +69,3 @@ function init(){
 }
 
 setIdle(true);
-members.forEach(member => {
-    member.setEnable(false);
-})
