@@ -225,7 +225,7 @@ button {
 .score {
     color: white;
     top: 1%;
-    font-size: 30px;
+    font-size: 22px;
     position: relative;
     right: 0%;
 }
@@ -245,7 +245,7 @@ button {
     background-size: contain;
     background-repeat: no-repeat;
     aspect-ratio: 1 / 1;
-    margin: 7px;
+    margin: 12px;
 }
 
 .icon-count{
