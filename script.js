@@ -8,11 +8,20 @@ const GameStatus = Object.freeze({
     'upFail': 7,
     'gameover': 8
 })
+
+class Sprite {
+    constructor(sprite){
+       this.sprite = sprite; 
+    }
+    setEnable(value){
+        this.sprite.style.display = value ? 'block' : 'none';
+    }
+}
 class Satoshi {
     constructor(){
-        this.idle_sprite = document.querySelector('#satoshi-idle');
-        this.up_sprite = document.querySelector('#satoshi-up');
-        this.exclamation = document.querySelector('#exclamation');
+        this.idle_sprite = new Sprite(document.querySelector('#satoshi-idle'));
+        this.up_sprite = new Sprite(document.querySelector('#satoshi-up'));
+        this.exclamation = new Sprite(document.querySelector('#exclamation'));
         this.status = 0;
     }
 
@@ -32,20 +41,11 @@ class Satoshi {
     }
 
     setSprite(idle, up, exclamation){
-        this.idle_sprite.style.display = idle ? 'block' : 'none';
-        this.up_sprite.style.display = up ? 'block' : 'none';
-        this.exclamation.style.display = exclamation ? 'block' : 'none';
+        this.idle_sprite.setEnable(idle);
+        this.up_sprite.setEnable(up);
+        this.exclamation.setEnable(exclamation);
     }
 
-}
-
-class Sprite {
-    constructor(sprite){
-       this.sprite = sprite; 
-    }
-    setEnable(value){
-        this.sprite.style.display = value ? 'block' : 'none';
-    }
 }
 
 
@@ -83,20 +83,22 @@ class Ripple extends Sprite {
         super(sprite);
         this.speed = speed;
         this.setEnable(false);
+        this.initX();
+    }
+
+    initX(){
+        let rect = this.sprite.getBoundingClientRect();
+        this.sprite.style.left = -1 * rect.width + 'px';
     }
 
     moveX(){
         let rect = this.sprite.getBoundingClientRect();
         let gameRect = gameArea.getBoundingClientRect();
         let newLeft = (rect.left + this.speed * (1000/60));
-        if(newLeft > gameRect.right) newLeft = -1 * rect.left;
+        if(newLeft > gameRect.right) newLeft = -1 * rect.width;
         
         this.sprite.style.left = newLeft + 'px';
         return;
-        rect = this.sprite.getBoundingClientRect();
-        
-        if(rect.left < gameRect.right) return;
-        this.sprite.style.left = 0 - rect.left;
     }
 }
 
@@ -209,4 +211,7 @@ function mainLoop(){
 }
 
 let gameStatus = GameStatus.justLoaded;
-setInterval(mainLoop, 1000/60);
+document.addEventListener('DOMContentLoaded', () => {
+    setInterval(mainLoop, 1000/60);
+});
+
