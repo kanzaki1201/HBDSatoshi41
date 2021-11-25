@@ -1,14 +1,29 @@
-const members = document.querySelectorAll('.member');
 const satoshi_idle = document.querySelector('#satoshi-idle')
 const satoshi_up = document.querySelector('#satoshi-up')
-const sho = document.querySelector("#sho");
-const aiba = document.querySelector("#aiba");
-const nino = document.querySelector("#nino");
-const jun = document.querySelector("#jun");
 const lives = document.querySelectorAll(".life");
+
+class Member {
+    constructor(name) {
+        this.name = name;
+        this.count = 0;
+        this.sprite = document.querySelector('#'+name);
+        this.countText = document.querySelectorAll('#'+name+'-count');
+    }
+
+    setEnable(value) {
+        this.sprite.style.display = value ? 'block' : 'none';
+    }
+}
+
+const sho = new Member('sho');
+const aiba = new Member('aiba');
+const nino = new Member('nino');
+const jun = new Member('jun');
 
 let isIdle = true;
 let lifeCount = 3;
+let fishCount = 0;
+let members = [sho, aiba, nino, jun];
 
 function setLife(value){
     for (let i = 0; i < lives.length; i++) {
@@ -33,30 +48,11 @@ function setIdle(value) {
     }
 }
 
-function setMember(member_name, enable){
-    let display_mode = enable ? 'block' : 'none';
-    switch(member_name){
-        case "sho":
-            sho.style.display = display_mode;
-            break;
-
-        case "aiba":
-            aiba.style.display = display_mode;
-            break;
-
-        case "nino":
-            nino.style.display = display_mode;
-            break;
-
-        case "jun":
-            jun.style.display = display_mode;
-            break;
-
-    }
-}
-
 function init(){
 
 }
 
 setIdle(true);
+members.forEach(member => {
+    member.setEnable(false);
+})
