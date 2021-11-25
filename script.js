@@ -2,7 +2,7 @@ const GameStatus = Object.freeze({
     'justLoaded': 1,
     'startTitle': 2,
     'idle':3,
-    'caught': 4,
+    // 'caught': 4,
     'battle': 5,
     'upSucess': 6,
     'upFail': 7,
@@ -15,6 +15,9 @@ class Sprite {
     }
     setEnable(value){
         this.sprite.style.display = value ? 'block' : 'none';
+    }
+    getRect(){
+        return this.sprite.getBoundingClientRect();
     }
 }
 class Satoshi {
@@ -44,6 +47,17 @@ class Satoshi {
         this.idle_sprite.setEnable(idle);
         this.up_sprite.setEnable(up);
         this.exclamation.setEnable(exclamation);
+    }
+
+    getCurrentSprite(){
+        switch(value){
+            case 0:
+                return this.idle_sprite;
+            case 1:
+                return this.idle_sprite;
+            case 2:
+                return this.up_sprite;
+        }
     }
 
 }
@@ -87,12 +101,12 @@ class Ripple extends Sprite {
     }
 
     initX(){
-        let rect = this.sprite.getBoundingClientRect();
+        let rect = this.getRect();
         this.sprite.style.left = -1 * rect.width + 'px';
     }
 
     moveX(){
-        let rect = this.sprite.getBoundingClientRect();
+        let rect = this.getRect();
         let gameRect = gameArea.getBoundingClientRect();
         let newLeft = (rect.left + this.speed * (1000/60));
         if(newLeft > gameRect.right) newLeft = -1 * rect.width;
@@ -173,19 +187,30 @@ function setTitle(enabled, isStart, isGameover){
 
 
 function onHitboxClick(){
-    if(gameStatus != GameStatus.battle) return;
-    satoshi.nextStatus();
+    switch(gameStatus){
+        case GameStatus.idle:
+            console.log('idle click')
+            let rippleRect = ripple.getRect();
+            let satoshiRect = satoshi.idle_sprite.getRect();
+            let rippleCenter = (rippleRect.left + ripple.right) * 0.5;
+            if(rippleRect.left > satoshiRect.right || rippleRect.right < satoshiRect.left) return;
+            gameStatus = GameStatus.battle;
+            satoshi.setSpriteStatus(1);
+            break;
+        case GameStatus.battle:
+            break;
+    }
 }
 
 function doIdle(){
     ripple.setEnable(true);
     ripple.moveX();
-
 }
 
 function mainLoop(){
     switch(gameStatus){
         case GameStatus.justLoaded:
+            console.log('loaded');
             resetGameValues();
             setTitle(true, true, false);
             gameStatus = GameStatus.startTitle;
@@ -196,8 +221,8 @@ function mainLoop(){
         case GameStatus.idle:
             doIdle();
             break;
-        case GameStatus.caught:
-            break;
+        // case GameStatus.caught:
+        //     break;
         case GameStatus.battle:
             break;
         case GameStatus.upSucess:
@@ -212,6 +237,7 @@ function mainLoop(){
 
 let gameStatus = GameStatus.justLoaded;
 document.addEventListener('DOMContentLoaded', () => {
+    gameStatus = GameStatus.justLoaded;
     setInterval(mainLoop, 1000/60);
 });
 
