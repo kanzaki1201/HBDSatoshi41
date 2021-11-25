@@ -33,8 +33,18 @@ class Satoshi {
         this.exclamation.setEnable(exclamation);
     }
 
+    rippleAABB(ripple){
+        let rippleRect = ripple.getRect();
+        let satoshiRect = satoshi.idle_sprite.getRect();
+        let rippleCenter = (rippleRect.left + rippleRect.right) * 0.5;
+        let satoshiCenter = (satoshiRect.left + satoshiRect.right) * 0.5;
+        if(rippleRect.left > satoshiRect.right 
+            || rippleCenter < satoshiCenter) return false;
+        return true;
+    }
+
     idle(){
-        this.setSprite(true, false, false);
+        this.setSprite(true, false, this.rippleAABB(ripple));
     }
 
     battle(){
@@ -59,10 +69,6 @@ class Fishable extends Sprite{
         this.count = 0;
         this.setEnable(false);
     }
-
-    // setEnable(value) {
-    //     this.sprite.style.display = value ? 'block' : 'none';
-    // }
 }
 class Member extends Fishable {
     constructor(name) {
@@ -118,7 +124,7 @@ class LifeCounter {
     }
 
     setLife(val){
-        val %= 3;
+        val %= 4;
         for (let index = 0; index < this.lifeSprites.length; index++) {
             this.lifeSprites[index].setEnable(index + 1 <= val);
         }
@@ -182,23 +188,18 @@ function onHitboxClick(){
     console.log('cilck');
     switch(gameStatus){
         case GameStatus.idle:
-            let rippleRect = ripple.getRect();
-            let satoshiRect = satoshi.idle_sprite.getRect();
-            let rippleCenter = (rippleRect.left + rippleRect.right) * 0.5;
-            let satoshiCenter = (satoshiRect.left + satoshiRect.right) * 0.5;
-            if(rippleRect.left > satoshiRect.right 
-                || rippleCenter < satoshiCenter){
+            if(!satoshi.rippleAABB(ripple)){
                 satoshi.upFail();
                 lifeCounter.decrementLife();
-                if(lifeCounter.lifeCount > 0){
-                    gameStatus = GameStatus.upFail;
-                    setTimeout( () => {
-                        gameStatus = GameStatus.idle;
-                        ripple.resetX();
-                    }, 3000);
+                if(lifeCounter.lifeCount <= 0){
+                    gameStatus = GameStatus.gameover;
                     return;
                 }
-                gameStatus = GameStatus.gameover;
+                gameStatus = GameStatus.upFail;
+                setTimeout( () => {
+                    gameStatus = GameStatus.idle;
+                    ripple.resetX();
+                }, 3000);
                 return;
             }
             console.log('to battle');
