@@ -95,6 +95,13 @@ class Ripple extends Sprite {
         this.resetX();
     }
 
+    isOutOfScreen(){
+        let gameRect = gameArea.getBoundingClientRect();
+        let rect = this.getRect();
+        if(rect.left > gameRect.right || rect.right < gameRect.left) return true;
+        return false;
+    }
+
     resetX(){
         let rect = this.getRect();
         this.sprite.style.left = -1 * rect.width + 'px';
@@ -125,6 +132,7 @@ class LifeCounter {
 
     setLife(val){
         val %= 4;
+        this.lifeCount = val;
         for (let index = 0; index < this.lifeSprites.length; index++) {
             this.lifeSprites[index].setEnable(index + 1 <= val);
         }
@@ -146,6 +154,7 @@ const members = [sho, aiba, nino, jun];
 const fish = new Fish();
 const ripple = new Ripple(.1);
 const lifeCounter = new LifeCounter();
+
 const scoreText = document.querySelector('.score');
 const gameArea = document.querySelector('#game');
 
@@ -154,8 +163,13 @@ const title_start = document.querySelector(".start");
 const title_gameover = document.querySelector(".gameover");
 
 let fishCount = 0;
+let tapCount = 0;
+let battleTimer = 0;
 
 const upFailTime = 3000; //ms
+const upSucessTime = 3000;
+const battleTime = 3000;
+const successTap = 3;
 
 function resetGameValues(){
     scoreText.innerHTML = "0";
@@ -185,35 +199,70 @@ function setTitle(enabled, isStart, isGameover){
 
 
 function onHitboxClick(){
-    console.log('cilck');
     switch(gameStatus){
         case GameStatus.idle:
+            if(ripple.isOutOfScreen()) return;
             if(!satoshi.rippleAABB(ripple)){
-                satoshi.upFail();
-                lifeCounter.decrementLife();
-                if(lifeCounter.lifeCount <= 0){
-                    gameStatus = GameStatus.gameover;
-                    return;
-                }
-                gameStatus = GameStatus.upFail;
-                setTimeout( () => {
-                    gameStatus = GameStatus.idle;
-                    ripple.resetX();
-                }, 3000);
+                doFail();
                 return;
             }
             console.log('to battle');
             gameStatus = GameStatus.battle;
-            satoshi.battle();
+            battleTimer = 0;
+            tapCount = 0;
             break;
         case GameStatus.battle:
+            console.log('battle click');
+            tapCount++;
             break;
     }
 }
 
-function doIdle(){
+function doFail(){
+    lifeCounter.decrementLife();
+    if(lifeCounter.lifeCount <= 0){
+        console.log('gameover');
+        gameStatus = GameStatus.gameover;
+        return;
+    }
+    gameStatus = GameStatus.upFail;
+    ripple.resetX();
+    ripple.setEnable(false);
+    console.log('fail');
+    setTimeout( () => {
+        gameStatus = GameStatus.idle;
+    }, upFailTime);
+}
+
+function doSuccess(){
+    console.log('success');
+    gameStatus = GameStatus.upSucess;
+    ripple.resetX();
+    ripple.setEnable(false);
+    setTimeout( () => {
+        gameStatus = GameStatus.idle;
+        ripple.setEnable(true);
+    }, upSucessTime);
+}
+
+function updateIdle(){
+    ripple.setEnable(true);
     ripple.moveX();
     satoshi.idle();
+}
+
+function updateBattle(){
+    satoshi.battle();
+    battleTimer += 1000/60.0;
+    if(battleTimer < battleTime && tapCount >= successTap){
+        doSuccess();
+        return;
+    }
+    if(battleTimer > battleTime){
+        battleTimer = 0;
+        doFail();
+    }
+    
 }
 
 function mainLoop(){
@@ -228,15 +277,18 @@ function mainLoop(){
             setTitle(true, true, false);
             break;
         case GameStatus.idle:
-            doIdle();
+            updateIdle();
             break;
         // case GameStatus.caught:
         //     break;
         case GameStatus.battle:
+            updateBattle();
             break;
         case GameStatus.upSucess:
+            satoshi.upSucess();
             break;
         case GameStatus.upFail:
+            satoshi.upFail();
             break;
         case GameStatus.gameover:
             setTitle(true, false, true);
