@@ -43,30 +43,48 @@ html, body {
 }
 
 #ship {
-    background-color: magenta;
-    width: 50%;
+    width: auto;
     height: 55%;
     position: absolute;
-    /* left: 0%; */
-    /* margin-left: 3%; */
-    /* top: 30vh; */
 }
 
 #ship-img {
     border: 5px solid black;
-    /* max-height: 100%; */
-    /* max-width: 100%; */
-    /* width: 100%; */
     height: 100%;
     object-fit: contain;
-    /* left: 0%; */
-    /* position: absolute; */
+}
+
+#satoshi {
+    position: absolute;
+    height: 75%;
+    width: auto;
+    left: 0;
+    transform: translate(50%, -140%);
+}
+
+#satoshi-img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.member {
+    background-color: green;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    height: auto;
+    width: auto;
+}
+
+.member-img {
+    object-fit: contain;
+    height: 200%;
+    width: 200%;
 }
 
 .life-container {
     display: flex;
     position: absolute;
-    /* margin-top: 3%; */
     top: 0;
     height: 10vh;
     width: auto;
@@ -93,30 +111,22 @@ html, body {
 
 .score {
     color: white;
-    top: 3%;
-    /* margin-top: 20%; */
-    /* text-shadow: 1px 1px 2px black; */
+    top: 1%;
     font-size: 30px;
     position: relative;
     right: 0%;
-    /* margin-right: 3%; */
 }
 
 .icon-container {
     position: absolute;
-    /* display: flex; */
     width: auto;
     max-width: 200px;
-    height: 50%;
-    /* flex-direction: column; */
+    height: 35%;
     right: 0;
-    top: 10vh;
-    /* margin-right: 3%; */
-    /* align-items: flex-start; */
+    top: 6vh;
 }
 
 .icon {
-    /* flex: 0 1 25%; */
     height: 20%;
     position: relative;
     background-size: contain;
