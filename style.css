@@ -54,6 +54,13 @@ html, body {
     object-fit: contain;
 }
 
+.sprite-containter {
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    object-fit: contain;
+}
+
 .satoshi {
     position: absolute;
     height: 75%;
@@ -62,10 +69,16 @@ html, body {
     transform: translate(50%, -140%);
 }
 
+#satoshi-idle-img {
+    height: 100%;
+    object-fit: contain;
+}
+
 #satoshi-up-img {
     height: 100%;
     object-fit: contain;
 }
+
 
 .member {
     background-color: green;
@@ -74,10 +87,6 @@ html, body {
     left: 50%;
     height: auto;
     width: auto;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    object-fit: contain;
     height: 100%;
     width: 100%;
 }
