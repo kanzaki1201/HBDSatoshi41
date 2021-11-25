@@ -16,13 +16,8 @@ class Satoshi {
         this.status = 0;
     }
 
-    nextStatus(){
-        this.status++;
-        this.status %= 3;
-        this.setStatus(this.status);
-    }
-
-    setStatus(value){
+    setSpriteStatus(value){
+        value %= 3;
         switch(value){
             case 0:
                 this.setSprite(true, false, false);
@@ -44,19 +39,27 @@ class Satoshi {
 
 }
 
-const satoshi = new Satoshi();
+class Sprite {
+    constructor(sprite){
+       this.sprite = sprite; 
+    }
+    setEnable(value){
+        this.sprite.style.display = value ? 'block' : 'none';
+    }
+}
 
-class Fishable {
+
+class Fishable extends Sprite{
     constructor(name, sprite){
+        super(sprite);
         this.name = name;
         this.count = 0;
-        this.sprite = sprite;
         this.setEnable(false);
     }
 
-    setEnable(value) {
-        this.sprite.style.display = value ? 'block' : 'none';
-    }
+    // setEnable(value) {
+    //     this.sprite.style.display = value ? 'block' : 'none';
+    // }
 }
 class Member extends Fishable {
     constructor(name) {
@@ -74,6 +77,30 @@ class Fish extends Fishable {
     }
 }
 
+class Ripple extends Sprite {
+    constructor(speed){
+        let sprite = document.querySelector('.ripple');
+        super(sprite);
+        this.speed = speed;
+        this.setEnable(false);
+    }
+
+    moveX(){
+        let rect = this.sprite.getBoundingClientRect();
+        let gameRect = gameArea.getBoundingClientRect();
+        let newLeft = (rect.left + this.speed * (1000/60));
+        if(newLeft > gameRect.right) newLeft = -1 * rect.left;
+        
+        this.sprite.style.left = newLeft + 'px';
+        return;
+        rect = this.sprite.getBoundingClientRect();
+        
+        if(rect.left < gameRect.right) return;
+        this.sprite.style.left = 0 - rect.left;
+    }
+}
+
+const satoshi = new Satoshi();
 const sho = new Member('sho');
 const aiba = new Member('aiba');
 const nino = new Member('nino');
@@ -81,7 +108,9 @@ const jun = new Member('jun');
 
 const lives = document.querySelectorAll(".life");
 const fish = new Fish();
+const ripple = new Ripple(.1);
 const scoreText = document.querySelector('.score');
+const gameArea = document.querySelector('#game');
 
 const title = document.querySelector('.title');
 const title_start = document.querySelector(".start");
@@ -119,7 +148,7 @@ function resetGameValues(){
     lifeCount = 3;
     fishCount = 0;
     scoreText.innerHTML = "0";
-    satoshi.setStatus(0);
+    satoshi.setSpriteStatus(0);
 }
 
 function startGame(){
@@ -140,9 +169,16 @@ function setTitle(enabled, isStart, isGameover){
     title_gameover.style.display = isGameover? 'block' : 'none';
 }
 
+
 function onHitboxClick(){
     if(gameStatus != GameStatus.battle) return;
     satoshi.nextStatus();
+}
+
+function doIdle(){
+    ripple.setEnable(true);
+    ripple.moveX();
+
 }
 
 function mainLoop(){
@@ -156,6 +192,7 @@ function mainLoop(){
             setTitle(true, true, false);
             break;
         case GameStatus.idle:
+            doIdle();
             break;
         case GameStatus.caught:
             break;

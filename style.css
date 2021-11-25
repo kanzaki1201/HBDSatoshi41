@@ -101,6 +101,8 @@ button {
 #ship-img {
     height: 100%;
     object-fit: contain;
+    z-index: 50;
+    position: relative;
 }
 
 .sprite-container {
@@ -140,6 +142,16 @@ button {
     width: 100%;
     object-fit: contain;
     background-image: url("assets/fishing_man.png");
+}
+
+.ripple {
+    background-image: url("assets/ripple.png");
+    width: 100%;
+    position: relative;
+    top: -15%;
+    aspect-ratio: 600 / 275;
+    z-index: 1;
+    display: block;
 }
 
 
