@@ -99,6 +99,23 @@ html, body {
     background-image: url("assets/temp_member.png");
 }
 
+#sho {
+    background-image: url("assets/sho.png");
+}
+
+#aiba {
+    background-image: url("assets/aiba.png");
+}
+
+#nino {
+    background-image: url("assets/nino.png");
+}
+
+#jun {
+    background-image: url("assets/jun.png");
+}
+
+
 .life-container {
     display: flex;
     position: absolute;
