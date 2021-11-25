@@ -5,6 +5,11 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+button {
+    outline: none;
+    border: none;
+}
+
 .title {
     width: 100vw;
     height: 100vh;
@@ -32,13 +37,12 @@ html, body {
     
 .start-button{
     position: absolute;
-    /* top: 50vh; */
-    /* left: 35%; */
     width: auto;
     height: 20%;
     font-size: 48px;
     margin: auto;
     display: block;
+    overflow: wrap;
 }
 
 .gameover{
@@ -86,7 +90,6 @@ html, body {
     height: 70%;
     width: 100%;
     box-sizing: border-box;
-    border: 5px solid green;
 }
 
 #ship {
@@ -96,7 +99,6 @@ html, body {
 }
 
 #ship-img {
-    border: 5px solid black;
     height: 100%;
     object-fit: contain;
 }
@@ -113,7 +115,7 @@ html, body {
     height: 75%;
     width: auto;
     left: 0;
-    transform: translate(50%, -120%);
+    transform: translate(50%, -115%);
 }
 
 #satoshi-idle {
@@ -265,3 +267,20 @@ html, body {
         -1px  0px 2px #000;
 }
 
+.hitbox{
+    /* background-color: transparent; */
+    width: 50vw;
+    height: 45vh;
+    position: absolute;
+    bottom: 0;
+}
+
+#left-hitbox {
+    left: 0;
+    background-color: rgba(255, 1, 0, .5);
+}
+
+#right-hitbox {
+    left: 50vw;
+    background-color: rgba(0, 255, 0, .5);
+}

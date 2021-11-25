@@ -93,6 +93,15 @@ function setTitle(enabled, isStart, isGameover){
     title_gameover.style.display = isGameover? 'block' : 'none';
 }
 
-initGame();
-setTitle(true, true, false);
+function onHitboxClick(){
+    console.log("on hitbox click");
+}
+
+function onPageLoaded(){
+    initGame();
+    setTitle(true, true, false);
+}
+
+onPageLoaded();
+
 
