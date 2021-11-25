@@ -1,3 +1,13 @@
+const GameStatus = Object.freeze({
+    'justLoaded': 1,
+    'startTitle': 2,
+    'idle':3,
+    'caught': 4,
+    'battle': 5,
+    'upSucess': 6,
+    'upFail': 7,
+    'gameover': 8
+})
 class Satoshi {
     constructor(){
         this.idle_sprite = document.querySelector('#satoshi-idle');
@@ -105,8 +115,7 @@ function setIdle(value) {
     }
 }
 
-function initGame(){
-    title_start.style.display = 'block';
+function resetGameValues(){
     lifeCount = 3;
     fishCount = 0;
     scoreText.innerHTML = "0";
@@ -114,12 +123,15 @@ function initGame(){
 }
 
 function startGame(){
+    if (gameStatus != GameStatus.startTitle) return;
     setTitle(false, false, false);
+    gameStatus = GameStatus.idle;
 }
 
 function restartGame(){
     setTitle(false, false, false);
-    initGame();
+    resetGameValues();
+    gameStatus = GameStatus.idle;
 }
 
 function setTitle(enabled, isStart, isGameover){
@@ -129,14 +141,35 @@ function setTitle(enabled, isStart, isGameover){
 }
 
 function onHitboxClick(){
+    if(gameStatus != GameStatus.battle) return;
     satoshi.nextStatus();
 }
 
-function onPageLoaded(){
-    initGame();
-    setTitle(true, true, false);
+function mainLoop(){
+    switch(gameStatus){
+        case GameStatus.justLoaded:
+            resetGameValues();
+            setTitle(true, true, false);
+            gameStatus = GameStatus.startTitle;
+            break;
+        case GameStatus.startTitle:
+            setTitle(true, true, false);
+            break;
+        case GameStatus.idle:
+            break;
+        case GameStatus.caught:
+            break;
+        case GameStatus.battle:
+            break;
+        case GameStatus.upSucess:
+            break;
+        case GameStatus.upFail:
+            break;
+        case GameStatus.gameover:
+            setTitle(true, false, true);
+            break;
+    }
 }
 
-onPageLoaded();
-
-
+let gameStatus = GameStatus.justLoaded;
+setInterval(mainLoop, 1000/60);

@@ -123,14 +123,16 @@ button {
     width: 100%;
     background-image: url("assets/fishing_man_1.png");
     object-fit: contain;
+    transform: translate(50%, -100%);
 }
 
 #exclamation {
     background-image: url("assets/exclamation.png");
     width: 25%;
     height: 25%;
-    padding-left: 30%;
-    
+    left: 15%;
+    top: -15%;
+    position: relative;   
 }
 
 #satoshi-up {
