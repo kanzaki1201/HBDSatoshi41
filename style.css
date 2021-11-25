@@ -103,7 +103,7 @@ button {
     object-fit: contain;
 }
 
-.sprite-containter {
+.sprite-container {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -123,6 +123,14 @@ button {
     width: 100%;
     background-image: url("assets/fishing_man_1.png");
     object-fit: contain;
+}
+
+#exclamation {
+    background-image: url("assets/exclamation.png");
+    width: 25%;
+    height: 25%;
+    padding-left: 30%;
+    
 }
 
 #satoshi-up {
@@ -270,7 +278,7 @@ button {
 .hitbox{
     /* background-color: transparent; */
     width: 50vw;
-    height: 45vh;
+    height: 100vh;
     position: absolute;
     bottom: 0;
 }
