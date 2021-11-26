@@ -30,7 +30,7 @@ class Satoshi {
         let rippleCenter = (rippleRect.left + rippleRect.right) * 0.5;
         let satoshiCenter = (satoshiRect.left + satoshiRect.right) * 0.5;
         if(rippleRect.left > satoshiRect.right 
-            || rippleCenter < satoshiCenter) return false;
+            || rippleRect.right < satoshiCenter) return false;
         return true;
     }
 

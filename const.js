@@ -1,15 +1,15 @@
-const easyMinSpeed = 0.15;
-const easyMaxSpeed = 0.35;
+const easyMinSpeed = 0.25;
+const easyMaxSpeed = 0.45;
 const easyMinCooldown = 2000; //should greater than missed/success/fail duraion
 const easyMaxCooldown = 3000; //ms
 
-const normalMinSpeed = 0.5;
-const normalMaxSpeed = 1.0;
+const normalMinSpeed = 0.6;
+const normalMaxSpeed = 1.1;
 const normalMinCooldown = 2000; //should greater than missed/success/fail duraion
 const normalMaxCooldown = 3000; //ms
 
-const hardMinSpeed = 0.7;
-const hardMaxSpeed = 1.3;
+const hardMinSpeed = 0.8;
+const hardMaxSpeed = 1.5;
 const hardMinCooldown = 2000; //should greater than missed/success/fail duraion
 const hardMaxCooldown = 3000; //ms
 
