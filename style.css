@@ -51,7 +51,7 @@ button:active {
 .start-button{
     width: auto;
     /* height: 20%; */
-    font-size: 34px;
+    font-size: 20;
     margin: auto;
     display: block;
     overflow: wrap;
@@ -63,8 +63,8 @@ button:active {
 
 .gameover{
     position: absolute;
-    top: 25vh;
-    left: 15vw;
+    top: 0;
+    left: 0;
     width: auto;
     height: 60vh;
 }
