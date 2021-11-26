@@ -167,7 +167,7 @@ function pickFishedItem(){
         fishedItem = fish;
     }
     else{
-        rnd = Math.floor(Math.random() * 3);
+        rnd = Math.floor(Math.random() * 4);
         fishedItem = members[rnd];
     }
     console.log('picked ' + fishedItem.name);
