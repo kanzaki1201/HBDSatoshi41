@@ -67,6 +67,7 @@ function startGame(difficulty){
     gameStatus = GameStatus.idle;
     ripple.resetX(); 
     setDifficulty(difficulty);
+    title.style.zIndex = 99; 
 }
 
 function restartGame(difficulty){
@@ -215,6 +216,7 @@ function mainLoop(){
             console.log('loaded');
             resetGameValues();
             setTitle(true, true, false);
+            title.style.zIndex = 999;
             gameStatus = GameStatus.startTitle;
             break;
         case GameStatus.startTitle:
