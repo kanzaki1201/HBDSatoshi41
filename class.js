@@ -77,6 +77,8 @@ class Member extends Fishable {
     constructor(name) {
         let sprite = document.querySelector('#'+name);
         super(name, sprite);
+        this.name = name;
+        this.icon = document.querySelector('#'+name+'-icon');
         this.countText = document.querySelector('#'+name+'-count');
         this.countText.innerHTML = "x0";
     }
@@ -84,6 +86,12 @@ class Member extends Fishable {
     setCount(val){
         super.setCount(val);
         this.countText.innerHTML = 'x' + this.count;
+        if(val > 0) {
+            this.icon.style.backgroundImage = "url('assets/" + this.name + "-icon.png')"; 
+        }
+        else{
+            this.icon.style.backgroundImage = "url('assets/hidden-icon.png')";
+        }
     }
 
     incrementCount(){

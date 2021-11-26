@@ -270,6 +270,7 @@ button:active {
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
+    background-image: url('assets/hidden-icon.png');
     aspect-ratio: 1 / 1;
     margin: 12px;
 }
@@ -286,7 +287,7 @@ button:active {
     background-image: none;
 }
 
-#sho-icon {
+/* #sho-icon {
     background-image: url('assets/sho-icon.png');
 }
 
@@ -300,7 +301,7 @@ button:active {
 
 #jun-icon {
     background-image: url('assets/jun-icon.png');
-}
+} */
 
 
 .stroke {
