@@ -1,15 +1,3 @@
-
-const GameStatus = Object.freeze({
-    'justLoaded': 1,
-    'startTitle': 2,
-    'idle':3,
-    'missed': 4,
-    'battle': 5,
-    'upSucess': 6,
-    'upFail': 7,
-    'gameover': 8
-})
-
 class Sprite {
     constructor(sprite){
        this.sprite = sprite; 
@@ -113,7 +101,8 @@ class Ripple extends Sprite {
         let sprite = document.querySelector('.ripple');
         super(sprite);
         this.setEnable(false);
-        this.resetX();
+        let rect = this.getRect();
+        this.sprite.style.left = -1 * rect.width + 'px';
     }
 
     isOutOfScreen(){

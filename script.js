@@ -16,6 +16,11 @@ const title = document.querySelector('.title');
 const title_start = document.querySelector(".start");
 const title_gameover = document.querySelector(".gameover");
 
+let minSpeed = easyMinSpeed;
+let maxSpeed = easyMaxSpeed;
+let minCooldown = easyMinCooldown;
+let maxCooldown = easyMaxCooldown;
+
 let fishCount = 0;
 let tapCount = 0;
 let battleTimer = 0;
@@ -33,17 +38,43 @@ function resetGameValues(){
     })
 }
 
-function startGame(){
+function setDifficulty(difficulty){
+    switch (difficulty){
+        case 0:
+            minSpeed = easyMinSpeed;
+            maxSpeed = easyMaxSpeed;
+            minCooldown = easyMinCooldown;
+            maxCooldown = easyMaxCooldown;
+            break;
+        case 1:
+            minSpeed = normalMinSpeed;
+            maxSpeed = normalMaxSpeed;
+            minCooldown = normalMinCooldown;
+            maxCooldown = normalMaxCooldown;
+            break;
+        case 2:
+            minSpeed = hardMinSpeed;
+            maxSpeed = hardMaxSpeed;
+            minCooldown = hardMinCooldown;
+            maxCooldown = hardMaxCooldown;
+            break;
+    }
+
+}
+
+function startGame(difficulty){
     if (gameStatus != GameStatus.startTitle) return;
     setTitle(false, false, false);
     gameStatus = GameStatus.idle;
     ripple.resetX(); 
+    setDifficulty(difficulty);
 }
 
-function restartGame(){
+function restartGame(difficulty){
     setTitle(false, false, false);
     resetGameValues();
     gameStatus = GameStatus.idle;
+    setDifficulty(difficulty);
 }
 
 function setTitle(enabled, isStart, isGameover){
