@@ -14,12 +14,14 @@ class Satoshi {
         this.idle_sprite = new Sprite(document.querySelector('#satoshi-idle'));
         this.up_sprite = new Sprite(document.querySelector('#satoshi-up'));
         this.exclamation = new Sprite(document.querySelector('#exclamation'));
+        this.fail = new Sprite(document.querySelector('#satoshi-fail'));
     }
 
-    setSprite(idle, up, exclamation){
+    setSprite(idle, up, exclamation, fail){
         this.idle_sprite.setEnable(idle);
         this.up_sprite.setEnable(up);
         this.exclamation.setEnable(exclamation);
+        this.fail.setEnable(fail);
     }
 
     rippleAABB(ripple){
@@ -33,23 +35,23 @@ class Satoshi {
     }
 
     idle(){
-        this.setSprite(true, false, this.rippleAABB(ripple));
+        this.setSprite(true, false, this.rippleAABB(ripple), false);
     }
 
     battle(){
-        this.setSprite(true, false, true);
+        this.setSprite(true, false, true, false);
     }
 
     missed(){
-        this.setSprite(false, true, false);
+        this.setSprite(false, false, false, true);
     }
 
     upFail(){
-        this.setSprite(false, true, false);
+        this.setSprite(false, false, false, true);
     }
 
     upSucess(){
-        this.setSprite(false, true, false);
+        this.setSprite(false, true, false, false);
     }
 
 }
