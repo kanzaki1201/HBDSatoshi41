@@ -106,30 +106,30 @@ function onHitboxClick(){
 
 function doMissed(){
     lifeCounter.decrementLife();
-    if(lifeCounter.lifeCount <= 0){
-        console.log('gameover');
-        gameStatus = GameStatus.gameover;
-        return;
-    }
     gameStatus = GameStatus.missed;
     ripple.resetX();
     console.log('missed');
     setTimeout( () => {
+        if(lifeCounter.lifeCount <= 0){
+            console.log('gameover');
+            gameStatus = GameStatus.gameover;
+            return;
+        }
         gameStatus = GameStatus.idle;
     }, missedDuration);
 }
 
 function doUpFail(){
     lifeCounter.decrementLife();
-    if(lifeCounter.lifeCount <= 0){
-        console.log('gameover');
-        gameStatus = GameStatus.gameover;
-        return;
-    }
     gameStatus = GameStatus.upFail;
     ripple.resetX();
     console.log('fail');
     setTimeout( () => {
+        if(lifeCounter.lifeCount <= 0){
+            console.log('gameover');
+            gameStatus = GameStatus.gameover;
+            return;
+        }
         gameStatus = GameStatus.idle;
     }, upFailDuration);
 }
