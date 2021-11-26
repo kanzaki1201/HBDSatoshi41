@@ -8,6 +8,7 @@ const members = [sho, aiba, nino, jun];
 const fish = new Fish();
 const ripple = new Ripple(.1);
 const lifeCounter = new LifeCounter();
+const ship = document.querySelector('#ship');
 
 const scoreText = document.querySelector('.score');
 const gameArea = document.querySelector('#game');
@@ -212,6 +213,7 @@ function updateUpSucess(){
     fishedItem.setEnable(true);
 }
 
+
 function mainLoop(){
     switch(gameStatus){
         case GameStatus.justLoaded:
@@ -247,4 +249,3 @@ function mainLoop(){
 
 let gameStatus = GameStatus.justLoaded;
 setInterval(mainLoop, 1000/60.0); //1000ms/60 = 60fps
-
