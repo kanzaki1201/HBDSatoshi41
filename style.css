@@ -36,8 +36,10 @@ button:active {
 .start{
     /* display: grid; */
     position: absolute;
-    top: 25vh;
-    left: 15vw;
+    top: 0;
+    left: 0;
+    /* top: 25vh; */
+    /* left: 15vw; */
     width: auto;
     height: 60vh;
 }
@@ -62,8 +64,10 @@ button:active {
 
 .gameover{
     position: absolute;
-    top: 25vh;
-    left: 15vw;
+    /* top: 25vh; */
+    /* left: 15vw; */
+    top: 0; 
+    left: 0;
     width: auto;
     height: 60vh;
 }
