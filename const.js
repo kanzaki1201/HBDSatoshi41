@@ -1,6 +1,6 @@
 const easyMinSpeed = 0.3;
-const easyMaxSpeed = 0.9;
-const easyMinCooldown = 4000; //should greater than missed/success/fail duraion
+const easyMaxSpeed = 0.3;
+const easyMinCooldown = 2000; //should greater than missed/success/fail duraion
 const easyMaxCooldown = 5000; //ms
 
 const normalMinSpeed = 0.5;
@@ -13,10 +13,10 @@ const hardMaxSpeed = 0.9;
 const hardMinCooldown = 3100; //should greater than missed/success/fail duraion
 const hardMaxCooldown = 4000; //ms
 
-const missedDuration = 2000; 
-const upFailDuration = 2000;
-const upSuccessDuration = 2000;
-const battleDuration = 1000;
+const missedDuration = 1500; 
+const upFailDuration = 1500;
+const upSuccessDuration = 1500;
+const battleDuration = 1;
 const successTap = 0;
 const fishChance = 0.5;
 const fishScoreMultiplier = 10;

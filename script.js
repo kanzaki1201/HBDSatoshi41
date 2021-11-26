@@ -93,6 +93,8 @@ function onHitboxClick(){
                 return;
             }
             console.log('to battle');
+            doUpSuccess();
+            return;
             gameStatus = GameStatus.battle;
             battleTimer = 0;
             tapCount = 0;
