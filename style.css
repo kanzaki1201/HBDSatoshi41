@@ -10,6 +10,10 @@ button {
     border: none;
 }
 
+button:active {
+    border-style: outset;
+}
+
 .title {
     width: 100vw;
     height: 100vh;
@@ -306,4 +310,12 @@ button {
 #right-hitbox {
     left: 50vw;
     background-color: rgba(0, 255, 0, .5);
+}
+
+* {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }

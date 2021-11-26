@@ -2,7 +2,7 @@ const GameStatus = Object.freeze({
     'justLoaded': 1,
     'startTitle': 2,
     'idle':3,
-    // 'caught': 4,
+    'missed': 4,
     'battle': 5,
     'upSucess': 6,
     'upFail': 7,
@@ -51,6 +51,10 @@ class Satoshi {
         this.setSprite(true, false, true);
     }
 
+    missed(){
+        this.setSprite(false, true, false);
+    }
+
     upFail(){
         this.setSprite(false, true, false);
     }
@@ -69,6 +73,14 @@ class Fishable extends Sprite{
         this.count = 0;
         this.setEnable(false);
     }
+
+    setCount(val){
+        this.count = val;
+    }
+
+    incrementCount(){
+        this.setCount(this.count+1);
+    }
 }
 class Member extends Fishable {
     constructor(name) {
@@ -76,6 +88,15 @@ class Member extends Fishable {
         super(name, sprite);
         this.countText = document.querySelector('#'+name+'-count');
         this.countText.innerHTML = "X0";
+    }
+
+    setCount(val){
+        super.setCount(val);
+        this.countText.innerHTML = 'X' + this.count;
+    }
+
+    incrementCount(){
+        this.setCount(this.count+1);
     }
 }
 
@@ -111,12 +132,14 @@ class Ripple extends Sprite {
         let rect = this.getRect();
         let gameRect = gameArea.getBoundingClientRect();
         let newLeft = (rect.left + this.speed * (1000/60.0));
+        let hasWrapped = false;
         if(newLeft > gameRect.right) {
             newLeft = -1 * rect.width;
+            hasWrapped = true;
         }
         
         this.sprite.style.left = newLeft + 'px';
-        return;
+        return hasWrapped;
     }
 }
 
@@ -165,17 +188,27 @@ const title_gameover = document.querySelector(".gameover");
 let fishCount = 0;
 let tapCount = 0;
 let battleTimer = 0;
+let fishedItem = fish;
 
-const upFailTime = 3000; //ms
-const upSucessTime = 3000;
-const battleTime = 3000;
+const missedDuration = 3000;
+const upFailDuration = 3000; //ms
+const upSuccessDuration = 3000;
+const battleDuration = 3000;
 const successTap = 3;
+const fishChance = 0.5;
+const fishScoreMultiplier = 10;
+const memberScoreMultiplier = 100;
 
 function resetGameValues(){
     scoreText.innerHTML = "0";
     satoshi.idle();
     ripple.resetX();
     lifeCounter.setLife(3);
+    fish.count = 0;
+    members.forEach(member => {
+        member.count = 0;
+        member.countText.innerHTML = "X0";
+    })
 }
 
 function startGame(){
@@ -203,7 +236,7 @@ function onHitboxClick(){
         case GameStatus.idle:
             if(ripple.isOutOfScreen()) return;
             if(!satoshi.rippleAABB(ripple)){
-                doFail();
+                doUpFail();
                 return;
             }
             console.log('to battle');
@@ -218,7 +251,23 @@ function onHitboxClick(){
     }
 }
 
-function doFail(){
+function doMissed(){
+    lifeCounter.decrementLife();
+    if(lifeCounter.lifeCount <= 0){
+        console.log('gameover');
+        gameStatus = GameStatus.gameover;
+        return;
+    }
+    gameStatus = GameStatus.missed;
+    ripple.resetX();
+    ripple.setEnable(false);
+    console.log('missed');
+    setTimeout( () => {
+        gameStatus = GameStatus.idle;
+    }, missedDuration);
+}
+
+function doUpFail(){
     lifeCounter.decrementLife();
     if(lifeCounter.lifeCount <= 0){
         console.log('gameover');
@@ -231,38 +280,88 @@ function doFail(){
     console.log('fail');
     setTimeout( () => {
         gameStatus = GameStatus.idle;
-    }, upFailTime);
+    }, upFailDuration);
 }
 
-function doSuccess(){
+function doUpSuccess(){
     console.log('success');
     gameStatus = GameStatus.upSucess;
     ripple.resetX();
     ripple.setEnable(false);
+    pickFishedItem();
+    fishedItem.incrementCount();
+    showFishedItemOnly();
+    calculateScore();
     setTimeout( () => {
         gameStatus = GameStatus.idle;
+        fishedItem.setEnable(false);
         ripple.setEnable(true);
-    }, upSucessTime);
+    }, upSuccessDuration);
+}
+
+function calculateScore(){
+    let score = 0;
+    members.forEach(member => {
+        score += member.count * memberScoreMultiplier;
+    })
+    score += fish.count * fishScoreMultiplier;
+    scoreText.innerHTML = score;
+}
+
+function pickFishedItem(){
+    let rnd = Math.random();
+    if(rnd < fishChance){
+        fishedItem = fish;
+    }
+    else{
+        rnd = Math.floor(Math.random() * 3);
+        fishedItem = members[rnd];
+    }
+    console.log('picked ' + fishedItem.name);
+}
+
+function showFishedItemOnly(){
+    fish.setEnable(false);
+    members.forEach(member => member.setEnable(false));
+    fishedItem.setEnable(true);
 }
 
 function updateIdle(){
     ripple.setEnable(true);
-    ripple.moveX();
     satoshi.idle();
+    if(ripple.moveX()){
+        doMissed();
+    }
 }
 
 function updateBattle(){
     satoshi.battle();
     battleTimer += 1000/60.0;
-    if(battleTimer < battleTime && tapCount >= successTap){
-        doSuccess();
+    if(battleTimer < battleDuration && tapCount >= successTap){
+        doUpSuccess();
         return;
     }
-    if(battleTimer > battleTime){
+    if(battleTimer > battleDuration){
         battleTimer = 0;
-        doFail();
+        doUpFail();
     }
     
+}
+
+function updateMissed(){
+    satoshi.missed();
+    ripple.setEnable(false);
+}
+
+function updateUpFail(){
+    satoshi.upFail();
+    ripple.setEnable(false);
+}
+
+function updateUpSucess(){
+    satoshi.upScucess();
+    ripple.setEnable(false);
+    fishedItem.setEnable(true);
 }
 
 function mainLoop(){
@@ -279,16 +378,17 @@ function mainLoop(){
         case GameStatus.idle:
             updateIdle();
             break;
-        // case GameStatus.caught:
-        //     break;
+        case GameStatus.missed:
+            updateMissed();
+            break;
         case GameStatus.battle:
             updateBattle();
             break;
         case GameStatus.upSucess:
-            satoshi.upSucess();
+            updateUpSucess();
             break;
         case GameStatus.upFail:
-            satoshi.upFail();
+            updateUpFail();
             break;
         case GameStatus.gameover:
             setTitle(true, false, true);
