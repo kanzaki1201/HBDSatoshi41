@@ -3,13 +3,13 @@ const easyMaxSpeed = 0.35;
 const easyMinCooldown = 2000; //should greater than missed/success/fail duraion
 const easyMaxCooldown = 3000; //ms
 
-const normalMinSpeed = 0.2;
-const normalMaxSpeed = 0.77;
+const normalMinSpeed = 0.5;
+const normalMaxSpeed = 1.0;
 const normalMinCooldown = 2000; //should greater than missed/success/fail duraion
 const normalMaxCooldown = 3000; //ms
 
-const hardMinSpeed = 0.4;
-const hardMaxSpeed = 0.9;
+const hardMinSpeed = 0.7;
+const hardMaxSpeed = 1.3;
 const hardMinCooldown = 2000; //should greater than missed/success/fail duraion
 const hardMaxCooldown = 3000; //ms
 
