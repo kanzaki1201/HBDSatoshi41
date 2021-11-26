@@ -266,7 +266,7 @@ button:active {
 }
 
 .icon {
-    height: 15vw;
+    height: 10vh;
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
