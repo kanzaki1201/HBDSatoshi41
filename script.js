@@ -31,10 +31,9 @@ function resetGameValues(){
     satoshi.idle();
     ripple.resetX();
     lifeCounter.setLife(3);
-    fish.count = 0;
+    fish.setCount(0);
     members.forEach(member => {
-        member.count = 0;
-        member.countText.innerHTML = "X0";
+        member.setCount(0);
     })
 }
 

@@ -76,12 +76,12 @@ class Member extends Fishable {
         let sprite = document.querySelector('#'+name);
         super(name, sprite);
         this.countText = document.querySelector('#'+name+'-count');
-        this.countText.innerHTML = "X0";
+        this.countText.innerHTML = "x0";
     }
 
     setCount(val){
         super.setCount(val);
-        this.countText.innerHTML = 'X' + this.count;
+        this.countText.innerHTML = 'x' + this.count;
     }
 
     incrementCount(){
