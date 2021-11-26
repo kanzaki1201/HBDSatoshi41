@@ -79,8 +79,8 @@ function restartGame(difficulty){
 
 function setTitle(enabled, isStart, isGameover){
     title.style.display = enabled ? 'block' : 'none';
-    title_start.style.display = isStart ? 'block' : 'none';
-    title_gameover.style.display = isGameover? 'block' : 'none';
+    title_start.style.display = isStart ? 'grid' : 'none';
+    title_gameover.style.display = isGameover? 'grid' : 'none';
 }
 
 

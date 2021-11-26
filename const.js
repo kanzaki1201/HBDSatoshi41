@@ -3,15 +3,15 @@ const easyMaxSpeed = 0.9;
 const easyMinCooldown = 4000; //should greater than missed/success/fail duraion
 const easyMaxCooldown = 5000; //ms
 
-const nomralMinSpeed = 0.5;
-const nomralMaxSpeed = 0.9;
-const nomralMinCooldown = 3500; //should greater than missed/success/fail duraion
-const nomralMaxCooldown = 5000; //ms
+const normalMinSpeed = 0.5;
+const normalMaxSpeed = 0.9;
+const normalMinCooldown = 3500; //should greater than missed/success/fail duraion
+const normalMaxCooldown = 4500; //ms
 
 const hardMinSpeed = 0.7;
 const hardMaxSpeed = 0.9;
 const hardMinCooldown = 3100; //should greater than missed/success/fail duraion
-const hardMaxCooldown = 5000; //ms
+const hardMaxCooldown = 4000; //ms
 
 const missedDuration = 2000; 
 const upFailDuration = 2000;

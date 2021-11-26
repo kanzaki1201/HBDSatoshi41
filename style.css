@@ -8,10 +8,12 @@ html, body {
 button {
     outline: none;
     border: none;
+    box-shadow: none;
 }
 
 button:active {
-    border-style: outset;
+    /* border-style: outset; */
+    border-style: none;
 }
 
 .title {
@@ -25,13 +27,19 @@ button:active {
     margin: 0%;
 }
 
+.title-item{
+    position: relative;
+    padding: 10px;
+    /* top: 10px; */
+}
+
 .start{
+    /* display: grid; */
     position: absolute;
     top: 25vh;
     left: 15vw;
-    object-fit: contain;
     width: auto;
-    height: 50vh;
+    height: 60vh;
 }
 
 .tutorial {
@@ -40,22 +48,24 @@ button:active {
 }
     
 .start-button{
-    position: absolute;
     width: auto;
-    height: 20%;
-    font-size: 48px;
+    /* height: 20%; */
+    font-size: 34px;
     margin: auto;
     display: block;
     overflow: wrap;
+}
+
+.sho-game-button {
+    font-size: 18px;
 }
 
 .gameover{
     position: absolute;
     top: 25vh;
     left: 15vw;
-    object-fit: contain;
     width: auto;
-    height: 50vh;
+    height: 60vh;
 }
 
 .wrapper {
@@ -294,7 +304,7 @@ button:active {
 }
 
 .hitbox{
-    /* background-color: transparent; */
+    background-color: transparent;
     width: 50vw;
     height: 100vh;
     position: absolute;
@@ -304,12 +314,10 @@ button:active {
 
 #left-hitbox {
     left: 0;
-    background-color: rgba(255, 1, 0, .5);
 }
 
 #right-hitbox {
     left: 50vw;
-    background-color: rgba(0, 255, 0, .5);
 }
 
 * {
@@ -318,4 +326,14 @@ button:active {
     -moz-user-select:none;
     -ms-user-select:none;
     user-select:none;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-color: white;
+
+    text-decoration: none;
+    color: initial;
 }
