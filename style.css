@@ -132,13 +132,13 @@ button:active {
     height: 75%;
     width: auto;
     left: 0;
-    transform: translate(50%, -115%);
+    transform: translate(50%, -100%);
 }
 
 #satoshi-fail {
     height: 100%;
     width: 100%;
-    background-image: url("assets/fishing_man_2.png");
+    background-image: url("assets/satoshi-fail.png");
     object-fit: contain;
     /* transform: translate(50%, -100%); */
 }
@@ -146,9 +146,9 @@ button:active {
 #satoshi-idle {
     height: 100%;
     width: 100%;
-    background-image: url("assets/fishing_man_1.png");
+    background-image: url("assets/satoshi-idle.png");
     object-fit: contain;
-    transform: translate(50%, -100%);
+    /* transform: translate(50%, -100%); */
 }
 
 #exclamation {
@@ -164,7 +164,7 @@ button:active {
     height: 100%;
     width: 100%;
     object-fit: contain;
-    background-image: url("assets/fishing_man.png");
+    background-image: url("assets/satoshi-upSuccess.png");
 }
 
 .ripple {
@@ -181,10 +181,14 @@ button:active {
 .member {
     /* background-color: green; */
     position: absolute;
-    top: 40%;
-    left: 50%;
+    top: 30%;
+    left: 57%;
     height: 100%;
     width: 100%;
+    /* top: 40%;
+    left: 50%;
+    height: 100%;
+    width: 100%; */
 }
 
 #temp-member {
@@ -209,11 +213,11 @@ button:active {
 
 .fish {
     position: absolute;
-    top: 40%;
-    left: 50%;
+    top: 30%;
+    left: 57%;
     height: 100%;
     width: 100%;
-    background-image: url("assets/fish.png");
+    background-image: url("assets/fish.gif");
 }
 
 
