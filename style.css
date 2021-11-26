@@ -256,14 +256,13 @@ button:active {
 .icon-container {
     position: absolute;
     width: auto;
-    max-width: 200px;
-    height: 35%;
+    height: auto;
     right: 0;
     top: 6vh;
 }
 
 .icon {
-    height: 20%;
+    height: 15vw;
     position: relative;
     background-size: contain;
     background-repeat: no-repeat;
@@ -288,11 +287,11 @@ button:active {
 }
 
 #aiba-icon  {
-    background-image: url('assets/icon1.png');
+    background-image: url('assets/aiba-icon.png');
 }
 
 #nino-icon {
-    background-image: url('assets/icon1.png');
+    background-image: url('assets/nino-icon.png');
 }
 
 #jun-icon {
