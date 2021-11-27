@@ -17,6 +17,7 @@ const title = document.querySelector('.title');
 const title_start = document.querySelector(".start");
 const title_gameover = document.querySelector(".gameover");
 
+
 let minSpeed = easyMinSpeed;
 let maxSpeed = easyMaxSpeed;
 let minCooldown = easyMinCooldown;
